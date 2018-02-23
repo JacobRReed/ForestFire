@@ -9,6 +9,7 @@ window.requestAnimFrame = (function() {
         };
 })();
 
+
 var forest = {
     X: 700,
     Y: 700,
@@ -26,12 +27,13 @@ for (var i = 0; i < forest.Y; i++) {
     }
 }
 
+
 function afterStep(forest) {
     var scale = 1;
     var canvas = document.getElementById('game');
     var c = canvas.getContext('2d');
-    for (var i = 0; i < forest.X; i++) {
-        for (var j = 0; j < forest.Y; j++) {
+    for (i = 0; i < forest.X; i++) {
+        for (j = 0; j < forest.Y; j++) {
             c.fillStyle = forest.c[forest.t[i][j]];
             c.fillRect(scale * j, scale * i, scale * j + 9, scale * i + 9);
         }
@@ -39,27 +41,25 @@ function afterStep(forest) {
 }
 
 function step(forest) {
-    var to = [];
-    for (var i = 0; i < forest.Y; i++) {
-        to[i] = forest.t[i].slice(0);
+    var temp = [];
+    for (i = 0; i < forest.Y; i++) {
+        temp[i] = forest.t[i].slice(0);
     }
 
-    for (var i = 0; i < forest.Y; i++) {
-        for (var j = 0; j < forest.Y; j++) {
-            if (0 == to[i][j]) {
+    for (i = 0; i < forest.Y; i++) {
+        for (j = 0; j < forest.Y; j++) {
+            if (temp[i][j] === 0) {
                 forest.t[i][j] = Math.random() < forest.propTree2 ? 1 : 0;
-            } else if (1 == to[i][j]) {
-                if (
-                    ((i > 0) && (2 == to[i - 1][j])) ||
-                    ((i < forest.Y - 1) && (2 == to[i + 1][j])) ||
-                    ((j > 0) && (2 == to[i][j - 1])) ||
-                    ((j < forest.X - 1) && (2 == to[i][j + 1]))
-                ) {
+            } else if (temp[i][j] === 1) {
+                if (((i > 0) && (2 == temp[i - 1][j])) ||
+                    ((i < forest.Y - 1) && (2 == temp[i + 1][j])) ||
+                    ((j > 0) && (2 == temp[i][j - 1])) ||
+                    ((j < forest.X - 1) && (2 == temp[i][j + 1]))) {
                     forest.t[i][j] = 2;
                 } else {
-                    forest.t[i][j] = Math.random() < forest.propBurn ? 2 : 1;
+                    forest.t[i][j] = Math.random() < forest.propBurn ? 2 : 1; //generate random number and compare against burn chance
                 }
-            } else if (2 == to[i][j]) {
+            } else if (temp[i][j] === 2) {
                 //Create empty cell if burnt
                 forest.t[i][j] = 0;
             }

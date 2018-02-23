@@ -10,3 +10,10 @@
 body {
     background-color: black;
 }
+
+.container {
+    position: absolute;
+    left: 20px;
+    top: 740px;
+    color: white;
+}
