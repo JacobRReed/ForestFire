@@ -9,6 +9,23 @@ window.requestAnimFrame = (function() {
         };
 })();
 
+//Socket.IO stuff
+
+socket.on("load", function(data) {
+    console.log(data);
+});
+
+socket.on("connect", function() {
+    console.log("Socket connected.")
+});
+socket.on("disconnect", function() {
+    console.log("Socket disconnected.")
+});
+socket.on("reconnect", function() {
+    console.log("Socket reconnected.")
+});
+
+var socket = io.connect("24.16.255.56:8888");
 
 var forest = {
     X: 700,
@@ -74,6 +91,18 @@ function start() {
     (function gameLoop() {
         this.step(forest);
         this.afterStep(forest);
+
+        socket.emit("save", {
+            studentname: "Jacob Reed",
+            statename: "aState",
+            data: forest
+        });
+
+        socket.emit("load", {
+            studentname: "Jacob Reed",
+            statename: "aState"
+        });
+
         requestAnimFrame(gameLoop, this.ctx);
     })();
 }
