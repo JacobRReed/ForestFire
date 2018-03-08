@@ -1,12 +1,14 @@
 {
-  "name": "MongoDB-Test",
-  "description": "mongo test app",
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {
-    "express": "4.2.0",
-	"socket.io": "*",
-    "mongojs": "*",
-	"mongodb": "*"
-  }
+    "name": "ForestFire",
+    "description": "Forest Fire simulation using cellular autonoma, mongojs, nodejs, socketio, express",
+    "private": true,
+    "dependencies": {
+        "express": "4.2.0",
+        "connect": "*",
+        "body-parser": "*",
+        "morgan": "*",
+        "mongojs": "*",
+        "jade": "*",
+        "socket.io": "*"
+    }
 }
