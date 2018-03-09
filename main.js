@@ -81,13 +81,13 @@ function start() {
 
         socket.emit("save", {
             studentname: "Jacob Reed",
-            statename: "aState",
-            data: forest
+            statename: "treeState",
+            data: forest.t
         });
 
         socket.emit("load", {
             studentname: "Jacob Reed",
-            statename: "aState"
+            statename: "treeState"
         });
 
         requestAnimFrame(gameLoop, this.ctx);
