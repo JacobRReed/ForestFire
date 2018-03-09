@@ -10,9 +10,25 @@ window.requestAnimFrame = (function() {
 })();
 
 var socket = io.connect("http://24.16.255.56:8888");
+
+socket.on("connect", function() {
+    console.log("Socket Connected");
+})
+
+socket.on("disconnect", function() {
+    console.log("Socket Disconnected");
+})
+
+socket.on("reconnect", function() {
+    console.log("Socket Reconnected");
+})
+
 socket.on("load", function(data) {
-    console.log(data);
+    console.log("Load Triggered");
+    afterStep(data);
 });
+
+
 
 var forest = {
     X: 700,
@@ -59,6 +75,16 @@ function step(forest) {
         }
     }
 
+    socket.emit("save", {
+        studentname: "Jacob Reed",
+        statename: "treeState",
+        data: forest
+    });
+
+    socket.emit("load", {
+        studentname: "Jacob Reed",
+        statename: "treeState"
+    });
 }
 
 //After loop function
@@ -66,9 +92,10 @@ function afterStep(forest) {
     var scale = 1;
     var canvas = document.getElementById('game');
     var c = canvas.getContext('2d');
-    for (i = 0; i < forest.X; i++) {
-        for (j = 0; j < forest.Y; j++) {
-            c.fillStyle = forest.colors[forest.t[i][j]];
+    console.log(forest);
+    for (i = 0; i < forest.data.X; i++) {
+        for (j = 0; j < forest.data.Y; j++) {
+            c.fillStyle = forest.data.colors[forest.data.t[i][j]];
             c.fillRect(scale * j, scale * i, scale * j + 9, scale * i + 9);
         }
     }
@@ -77,19 +104,6 @@ function afterStep(forest) {
 function start() {
     (function gameLoop() {
         this.step(forest);
-        this.afterStep(forest);
-
-        socket.emit("save", {
-            studentname: "Jacob Reed",
-            statename: "treeState",
-            data: forest.t
-        });
-
-        socket.emit("load", {
-            studentname: "Jacob Reed",
-            statename: "treeState"
-        });
-
         requestAnimFrame(gameLoop, this.ctx);
     })();
 }
