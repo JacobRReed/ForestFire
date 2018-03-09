@@ -31,11 +31,11 @@ socket.on("load", function(data) {
 
 
 var forest = {
-    X: 700,
-    Y: 700,
+    X: 350,
+    Y: 350,
     treeChance: 0.01, //tree repopulate chance
     treeChance2: 0.01, //tree repopulate chance 2
-    burnChance: 0.01, //Burn chance
+    burnChance: 0.001, //Burn chance
     t: [],
     colors: ['#000000', '#25f68b', '#f17400']
 };
